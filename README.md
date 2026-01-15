@@ -38,8 +38,9 @@ I'm a Computer Science & AI student at **NSUT**, passionate about Full Stack Dev
 ### 📊 **GitHub Stats**
 
 <div align="center">
-  <img src="https://github-readme-stats.vercel.app/api?username=Dictator-09&show_icons=true&theme=radical" height="150" alt="stats graph"  />
-  <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=Dictator-09&layout=compact&theme=radical" height="150" alt="languages graph"  />
+  <a href="https://git.io/streak-stats">
+    <img src="https://github-readme-streak-stats.herokuapp.com/?user=Dictator-09&theme=radical" alt="GitHub Streak" />
+  </a>
 </div>
 
 ---
