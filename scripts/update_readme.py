@@ -4,10 +4,12 @@ Script to update GitHub profile README with repository statistics
 """
 
 import os
+import re
 import sys
 import requests
 from datetime import datetime, timezone
 from collections import Counter
+from urllib.parse import quote
 
 # Get environment variables
 GITHUB_TOKEN = os.environ.get('GITHUB_TOKEN')
@@ -108,7 +110,6 @@ def calculate_stats(repos):
 
 def generate_readme(user_info, repos, stats):
     """Generate README content"""
-    from urllib.parse import quote
     
     # Filter out forked repos for featured projects
     original_repos = [repo for repo in repos if not repo.get('fork')]
@@ -125,7 +126,7 @@ def generate_readme(user_info, repos, stats):
     for lang, count in stats['top_languages']:
         # Sanitize language name for URL
         lang_lower = lang.lower()
-        logo_name = LANGUAGE_LOGOS.get(lang_lower, lang_lower.replace(' ', ''))
+        logo_name = LANGUAGE_LOGOS.get(lang_lower, re.sub(r'[^a-z0-9]', '', lang_lower))
         # Use consistent URL encoding
         lang_encoded = quote(lang)
         language_badges.append(f"![{lang}](https://img.shields.io/badge/-{lang_encoded}-informational?style=flat&logo={logo_name}&logoColor=white)")
