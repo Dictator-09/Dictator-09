@@ -13,37 +13,56 @@ GITHUB_TOKEN = os.environ.get('GITHUB_TOKEN')
 GITHUB_USERNAME = os.environ.get('GITHUB_USERNAME', 'Dictator-09')
 
 # GitHub API headers
-headers = {
-    'Authorization': f'token {GITHUB_TOKEN}' if GITHUB_TOKEN else '',
-    'Accept': 'application/vnd.github.v3+json'
-}
+headers = {'Accept': 'application/vnd.github.v3+json'}
+if GITHUB_TOKEN:
+    headers['Authorization'] = f'token {GITHUB_TOKEN}'
 
 def get_user_repos():
     """Fetch all repositories for the user"""
-    url = f'https://api.github.com/users/{GITHUB_USERNAME}/repos'
-    params = {
-        'per_page': 100,
-        'sort': 'updated',
-        'type': 'owner'
-    }
+    all_repos = []
+    page = 1
+    per_page = 100
     
-    try:
-        response = requests.get(url, headers=headers, params=params)
-        response.raise_for_status()
-        return response.json()
-    except Exception as e:
-        print(f"Error fetching repositories: {e}")
-        return []
+    while True:
+        url = f'https://api.github.com/users/{GITHUB_USERNAME}/repos'
+        params = {
+            'per_page': per_page,
+            'page': page,
+            'sort': 'updated',
+            'type': 'owner'
+        }
+        
+        try:
+            response = requests.get(url, headers=headers, params=params, timeout=30)
+            response.raise_for_status()
+            repos = response.json()
+            
+            if not repos:
+                break
+                
+            all_repos.extend(repos)
+            
+            # If we got fewer than per_page results, we're done
+            if len(repos) < per_page:
+                break
+                
+            page += 1
+            
+        except requests.RequestException as e:
+            print(f"Error fetching repositories: {e}")
+            break
+    
+    return all_repos
 
 def get_user_info():
     """Fetch user profile information"""
     url = f'https://api.github.com/users/{GITHUB_USERNAME}'
     
     try:
-        response = requests.get(url, headers=headers)
+        response = requests.get(url, headers=headers, timeout=30)
         response.raise_for_status()
         return response.json()
-    except Exception as e:
+    except requests.RequestException as e:
         print(f"Error fetching user info: {e}")
         return {}
 
@@ -71,6 +90,14 @@ def calculate_stats(repos):
 def generate_readme(user_info, repos, stats):
     """Generate README content"""
     
+    # Language name to logo mapping for shield badges
+    LANGUAGE_LOGOS = {
+        'c++': 'cplusplus',
+        'c#': 'csharp',
+        'objective-c': 'objectivec',
+        'f#': 'fsharp',
+    }
+    
     # Filter out forked repos for featured projects
     original_repos = [repo for repo in repos if not repo.get('fork')]
     
@@ -84,7 +111,10 @@ def generate_readme(user_info, repos, stats):
     # Create language badges
     language_badges = []
     for lang, count in stats['top_languages']:
-        language_badges.append(f"![{lang}](https://img.shields.io/badge/-{lang}-informational?style=flat&logo={lang.lower()}&logoColor=white)")
+        # Sanitize language name for URL
+        lang_lower = lang.lower()
+        logo_name = LANGUAGE_LOGOS.get(lang_lower, lang_lower.replace(' ', ''))
+        language_badges.append(f"![{lang}](https://img.shields.io/badge/-{lang.replace(' ', '%20')}-informational?style=flat&logo={logo_name}&logoColor=white)")
     
     readme_content = f"""# Hi there! 👋 I'm {user_info.get('name', GITHUB_USERNAME)}
 
