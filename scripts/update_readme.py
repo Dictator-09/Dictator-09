@@ -4,6 +4,7 @@ Script to update GitHub profile README with repository statistics
 """
 
 import os
+import sys
 import requests
 from datetime import datetime
 from collections import Counter
@@ -16,6 +17,14 @@ GITHUB_USERNAME = os.environ.get('GITHUB_USERNAME', 'Dictator-09')
 headers = {'Accept': 'application/vnd.github.v3+json'}
 if GITHUB_TOKEN:
     headers['Authorization'] = f'token {GITHUB_TOKEN}'
+
+# Language name to logo mapping for shield badges
+LANGUAGE_LOGOS = {
+    'c++': 'cplusplus',
+    'c#': 'csharp',
+    'objective-c': 'objectivec',
+    'f#': 'fsharp',
+}
 
 def get_user_repos():
     """Fetch all repositories for the user"""
@@ -89,14 +98,6 @@ def calculate_stats(repos):
 
 def generate_readme(user_info, repos, stats):
     """Generate README content"""
-    
-    # Language name to logo mapping for shield badges
-    LANGUAGE_LOGOS = {
-        'c++': 'cplusplus',
-        'c#': 'csharp',
-        'objective-c': 'objectivec',
-        'f#': 'fsharp',
-    }
     
     # Filter out forked repos for featured projects
     original_repos = [repo for repo in repos if not repo.get('fork')]
@@ -217,7 +218,7 @@ def main():
         print("No repositories found or error occurred")
         print("This is expected when running without a GITHUB_TOKEN")
         print("The workflow will have proper credentials when running in GitHub Actions")
-        return
+        sys.exit(1)
     
     print(f"Found {len(repos)} repositories")
     
