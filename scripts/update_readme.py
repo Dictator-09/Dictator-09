@@ -14,9 +14,9 @@ GITHUB_TOKEN = os.environ.get('GITHUB_TOKEN')
 GITHUB_USERNAME = os.environ.get('GITHUB_USERNAME', 'Dictator-09')
 
 # GitHub API headers
-headers = {'Accept': 'application/vnd.github.v3+json'}
+headers = {'Accept': 'application/vnd.github+json'}
 if GITHUB_TOKEN:
-    headers['Authorization'] = f'token {GITHUB_TOKEN}'
+    headers['Authorization'] = f'Bearer {GITHUB_TOKEN}'
 
 # Language name to logo mapping for shield badges
 LANGUAGE_LOGOS = {
