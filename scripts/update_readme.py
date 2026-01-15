@@ -254,4 +254,10 @@ def main():
     print(f"Total Repos: {stats['total_repos']}")
 
 if __name__ == '__main__':
-    main()
+    try:
+        main()
+    except SystemExit:
+        raise
+    except Exception as e:
+        print(f"Unexpected error: {e}")
+        sys.exit(1)
