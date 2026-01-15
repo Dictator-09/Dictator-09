@@ -6,7 +6,7 @@ Script to update GitHub profile README with repository statistics
 import os
 import sys
 import requests
-from datetime import datetime
+from datetime import datetime, timezone
 from collections import Counter
 
 # Get environment variables
@@ -24,6 +24,16 @@ LANGUAGE_LOGOS = {
     'c#': 'csharp',
     'objective-c': 'objectivec',
     'f#': 'fsharp',
+    'javascript': 'javascript',
+    'typescript': 'typescript',
+    'python': 'python',
+    'java': 'java',
+    'go': 'go',
+    'rust': 'rust',
+    'ruby': 'ruby',
+    'php': 'php',
+    'swift': 'swift',
+    'kotlin': 'kotlin',
 }
 
 def get_user_repos():
@@ -98,6 +108,7 @@ def calculate_stats(repos):
 
 def generate_readme(user_info, repos, stats):
     """Generate README content"""
+    from urllib.parse import quote
     
     # Filter out forked repos for featured projects
     original_repos = [repo for repo in repos if not repo.get('fork')]
@@ -115,7 +126,9 @@ def generate_readme(user_info, repos, stats):
         # Sanitize language name for URL
         lang_lower = lang.lower()
         logo_name = LANGUAGE_LOGOS.get(lang_lower, lang_lower.replace(' ', ''))
-        language_badges.append(f"![{lang}](https://img.shields.io/badge/-{lang.replace(' ', '%20')}-informational?style=flat&logo={logo_name}&logoColor=white)")
+        # Use consistent URL encoding
+        lang_encoded = quote(lang)
+        language_badges.append(f"![{lang}](https://img.shields.io/badge/-{lang_encoded}-informational?style=flat&logo={logo_name}&logoColor=white)")
     
     readme_content = f"""# Hi there! 👋 I'm {user_info.get('name', GITHUB_USERNAME)}
 
@@ -199,7 +212,7 @@ def generate_readme(user_info, repos, stats):
 
 *This README is automatically updated daily with my latest repository statistics*
 
-**Last Updated:** {datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S UTC')}
+**Last Updated:** {datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M:%S UTC')}
 
 </div>
 """
@@ -215,9 +228,11 @@ def main():
     repos = get_user_repos()
     
     if not repos:
-        print("No repositories found or error occurred")
-        print("This is expected when running without a GITHUB_TOKEN")
-        print("The workflow will have proper credentials when running in GitHub Actions")
+        if not GITHUB_TOKEN:
+            print("No repositories found - this is expected when running without a GITHUB_TOKEN")
+            print("The workflow will have proper credentials when running in GitHub Actions")
+        else:
+            print("No repositories found for this user")
         sys.exit(1)
     
     print(f"Found {len(repos)} repositories")
