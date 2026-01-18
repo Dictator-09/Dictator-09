@@ -109,14 +109,6 @@ I'm a Computer Science & AI student at **NSUT**, passionate about Full Stack Dev
 
 ---
 
-### 🏆 **GitHub Trophies**
-
-<div align="center">
-  <img src="https://github-profile-trophy.vercel.app/?username=Dictator-09&theme=radical&no-frame=true&no-bg=true&row=1&column=7" alt="GitHub Trophies"/>
-</div>
-
----
-
 ### 📉 **GitHub Profile Summary**
 
 <div align="center">
