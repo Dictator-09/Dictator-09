@@ -83,18 +83,19 @@ I'm a Computer Science & AI student at **NSUT**, passionate about Full Stack Dev
 
 <div align="center">
   
-  <!-- GitHub Stats Card -->
-  <img src="https://github-readme-stats.vercel.app/api?username=Dictator-09&show_icons=true&theme=radical&hide_border=true&include_all_commits=true&count_private=true" alt="GitHub Stats" height="180"/>
-  
-  <!-- Top Languages Card -->
-  <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=Dictator-09&layout=compact&theme=radical&hide_border=true&langs_count=8" alt="Top Languages" height="180"/>
+  <!-- Top Languages Card - Most reliable -->
+  <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=Dictator-09&layout=compact&theme=radical&hide_border=true&langs_count=8" alt="Top Languages" />
 
 </div>
 
+<br/>
+
 <div align="center">
   
-  <!-- GitHub Streak Stats (using a more reliable source) -->
-  <img src="https://streak-stats.demolab.com/?user=Dictator-09&theme=radical&hide_border=true" alt="GitHub Streak"/>
+  <!-- GitHub Streak Stats - Using DenverCoder1's reliable fork -->
+  <a href="https://git.io/streak-stats">
+    <img src="https://github-readme-streak-stats-eight.vercel.app/?user=Dictator-09&theme=radical&hide_border=true" alt="GitHub Streak"/>
+  </a>
   
 </div>
 
@@ -111,7 +112,20 @@ I'm a Computer Science & AI student at **NSUT**, passionate about Full Stack Dev
 ### 🏆 **GitHub Trophies**
 
 <div align="center">
-  <img src="https://github-profile-trophy.vercel.app/?username=Dictator-09&theme=radical&no-frame=true&row=1&column=7" alt="GitHub Trophies"/>
+  <img src="https://github-profile-trophy.vercel.app/?username=Dictator-09&theme=radical&no-frame=true&no-bg=true&row=1&column=7" alt="GitHub Trophies"/>
+</div>
+
+---
+
+### 📉 **GitHub Profile Summary**
+
+<div align="center">
+  <img src="https://github-profile-summary-cards.vercel.app/api/cards/profile-details?username=Dictator-09&theme=radical" alt="Profile Summary" width="100%"/>
+</div>
+
+<div align="center">
+  <img src="https://github-profile-summary-cards.vercel.app/api/cards/repos-per-language?username=Dictator-09&theme=radical" alt="Repos per Language" height="180"/>
+  <img src="https://github-profile-summary-cards.vercel.app/api/cards/most-commit-language?username=Dictator-09&theme=radical" alt="Most Commit Language" height="180"/>
 </div>
 
 ---
@@ -128,12 +142,6 @@ I'm a Computer Science & AI student at **NSUT**, passionate about Full Stack Dev
 </div>
 
 ---
-
-<div align="center">
-  
-  ![Snake animation](https://raw.githubusercontent.com/Dictator-09/Dictator-09/output/github-contribution-grid-snake-dark.svg)
-  
-</div>
 
 <div align="center">
   <img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&height=100&section=footer" width="100%"/>
